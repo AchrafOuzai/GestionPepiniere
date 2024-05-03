@@ -121,7 +121,7 @@ public class Plante extends JFrame {
 		panel_gauche.setLayout(null);
 		
 		JButton btnPlantes = new JButton("Liste des plantes");
-		btnPlantes.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnPlantes.setFont(new Font("Arial", Font.BOLD, 15));
 		btnPlantes.setForeground(new Color(255, 255, 255));
 		btnPlantes.setBounds(5, 22, 177, 23);
 		btnPlantes.setBackground(new Color(0, 128, 0));
@@ -130,7 +130,7 @@ public class Plante extends JFrame {
 		panel_gauche.add(btnPlantes);
 		
 		JButton btnStock = new JButton("Stock des plantes");
-		btnStock.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnStock.setFont(new Font("Arial", Font.BOLD, 15));
 		btnStock.setForeground(new Color(255, 255, 255));
 		btnStock.setBackground(new Color(0, 128, 0));
 		btnStock.setBounds(5, 56, 177, 23);
@@ -153,25 +153,48 @@ public class Plante extends JFrame {
 		panel_gauche.add(btnStock);
 		
 		JButton btnProduitsPhysiques = new JButton("Produits physiques");
-		btnProduitsPhysiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnProduitsPhysiques.setFont(new Font("Arial", Font.BOLD, 15));
 		btnProduitsPhysiques.setForeground(new Color(255, 255, 255));
 		btnProduitsPhysiques.setBackground(new Color(0, 128, 0));
 		btnProduitsPhysiques.setBounds(10, 90, 177, 23);
 		btnProduitsPhysiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsPhysiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduitPhysique produitphysique;
+					produitphysique = new ProduitPhysique();
+					produitphysique.frame.setVisible(true);
+					produitphysique.frame.setLocationRelativeTo(null);
+             dispose();
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsPhysiques);
 		
 		JButton btnProduitsChimiques = new JButton("Produits chimiques");
-		btnProduitsChimiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnProduitsChimiques.setFont(new Font("Arial", Font.BOLD, 15));
 		btnProduitsChimiques.setForeground(new Color(255, 255, 255));
 		btnProduitsChimiques.setBackground(new Color(0, 128, 0));
 		btnProduitsChimiques.setBounds(10, 124, 177, 23);
 		btnProduitsChimiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsChimiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduiTChemiques produitchemiques;
+					
+						produitchemiques = new ProduiTChemiques();
+						produitchemiques.frame.setVisible(true);
+						produitchemiques.frame.setLocationRelativeTo(null);
+                 dispose();
+					
+					
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsChimiques);
 		
 		JLabel labelNom = new JLabel("Nom :");
 		labelNom.setBounds(233, 53, 65, 14);
 		labelNom.setFont(new Font("Tahoma", Font.BOLD, 17));
-		labelNom.setForeground(new Color(0, 128, 0));
+		labelNom.setForeground(new Color(5, 127, 26));
 		panneauPrincipal.add(labelNom);
 		
 		champ_nom = new JTextField();
@@ -182,18 +205,18 @@ public class Plante extends JFrame {
 		JLabel labelDescription = new JLabel("Description :");
 		labelDescription.setBounds(233, 109, 124, 27);
 		labelDescription.setFont(new Font("Tahoma", Font.BOLD, 17));
-		labelDescription.setForeground(new Color(0, 128, 0));
+		labelDescription.setForeground(new Color(5, 127, 26));
 		panneauPrincipal.add(labelDescription);
 		
 		champ_description = new JTextArea();
 		champ_description.setBounds(233, 147, 190, 48);
-		champ_description.setBackground(new Color(240, 240, 240));
+		champ_description.setBackground(new Color(200, 200, 200));
 		panneauPrincipal.add(champ_description);
 		
 		JLabel labelPrix = new JLabel("Prix :");
 		labelPrix.setBounds(658, 53, 65, 14);
 		labelPrix.setFont(new Font("Tahoma", Font.BOLD, 17));
-		labelPrix.setForeground(new Color(0, 128, 0));
+		labelPrix.setForeground(new Color(5, 127, 26));
 		panneauPrincipal.add(labelPrix);
 		
 		champ_prix = new JTextField();
@@ -204,7 +227,7 @@ public class Plante extends JFrame {
 		JLabel labelType = new JLabel("Type :");
 		labelType.setBounds(658, 109, 77, 27);
 		labelType.setFont(new Font("Tahoma", Font.BOLD, 17));
-		labelType.setForeground(new Color(0, 128, 0));
+		labelType.setForeground(new Color(5, 127, 26));
 		panneauPrincipal.add(labelType);
 		
 		comboBoxType = new JComboBox();
@@ -293,7 +316,7 @@ public class Plante extends JFrame {
 		
 		JLabel labelTitre = new JLabel("Gestion des plantes");
 		labelTitre.setBounds(383, 11, 289, 42);
-		labelTitre.setFont(new Font("Snap ITC", Font.BOLD, 23));
+		labelTitre.setFont(new Font("Snap ITC", Font.BOLD, 24));
 		labelTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitre.setForeground(new Color(0, 128, 0));
 		panneauPrincipal.add(labelTitre);
@@ -301,7 +324,11 @@ public class Plante extends JFrame {
 		JLabel labelImagetext = new JLabel("Image :");
 		labelImagetext.setBounds(513, 168, 93, 27);
 		labelImagetext.setFont(new Font("Tahoma", Font.BOLD, 17));
+
 		labelImagetext.setForeground(new Color(0, 128, 0));
+
+		labelImagetext.setForeground(new Color(5, 127, 26));
+
 		panneauPrincipal.add(labelImagetext);
 		
 		JButton btnChoix_image = new JButton("Choisir une image");
@@ -365,7 +392,7 @@ public class Plante extends JFrame {
 		champ_recherche.setColumns(10);
 		
 		JLabel label_logo = new JLabel("New label");
-		label_logo.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\palnt.png"));
+		label_logo.setIcon(new ImageIcon("src\\images\\palnt.png"));
 		label_logo.setBounds(20, 11, 150, 92);
 		panneauPrincipal.add(label_logo);
 		

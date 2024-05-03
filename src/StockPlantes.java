@@ -81,11 +81,11 @@ public class StockPlantes extends JFrame {
 		panneauPrincipal.add(panel_gauche);
 		
 		JButton btnPlantes = new JButton("Liste des plantes");
-		btnPlantes.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnPlantes.setFont(new Font("Arial", Font.BOLD, 15));
 		btnPlantes.setForeground(Color.WHITE);
 		btnPlantes.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		btnPlantes.setBackground(new Color(0, 128, 0));
-		btnPlantes.setBounds(5, 22, 177, 23);
+		btnPlantes.setBounds(5, 22, 177, 24);
 		btnPlantes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             		Plante plante;
@@ -104,7 +104,7 @@ public class StockPlantes extends JFrame {
 		panel_gauche.add(btnPlantes);
 		
 		JButton btnStock = new JButton("Stock des plantes");
-		btnStock.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnStock.setFont(new Font("Arial", Font.BOLD, 15));
 		btnStock.setForeground(Color.WHITE);
 		btnStock.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		btnStock.setBackground(new Color(0, 128, 0));
@@ -112,24 +112,47 @@ public class StockPlantes extends JFrame {
 		panel_gauche.add(btnStock);
 		
 		JButton btnProduitsPhysiques = new JButton("Produits physiques");
-		btnProduitsPhysiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
-		btnProduitsPhysiques.setForeground(Color.WHITE);
-		btnProduitsPhysiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsPhysiques.setFont(new Font("Arial", Font.BOLD, 15));
+		btnProduitsPhysiques.setForeground(new Color(255, 255, 255));
 		btnProduitsPhysiques.setBackground(new Color(0, 128, 0));
 		btnProduitsPhysiques.setBounds(10, 90, 177, 23);
+		btnProduitsPhysiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsPhysiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduitPhysique produitphysique;
+					produitphysique = new ProduitPhysique();
+					produitphysique.frame.setVisible(true);
+					produitphysique.frame.setLocationRelativeTo(null);
+             dispose();
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsPhysiques);
 		
 		JButton btnProduitsChimiques = new JButton("Produits chimiques");
-		btnProduitsChimiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
-		btnProduitsChimiques.setForeground(Color.WHITE);
-		btnProduitsChimiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsChimiques.setFont(new Font("Arial", Font.BOLD, 15));
+		btnProduitsChimiques.setForeground(new Color(255, 255, 255));
 		btnProduitsChimiques.setBackground(new Color(0, 128, 0));
-		btnProduitsChimiques.setBounds(10, 123, 177, 23);
+		btnProduitsChimiques.setBounds(10, 124, 177, 23);
+		btnProduitsChimiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsChimiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduiTChemiques produitchemiques;
+					
+						produitchemiques = new ProduiTChemiques();
+						produitchemiques.frame.setVisible(true);
+						produitchemiques.frame.setLocationRelativeTo(null);
+                 dispose();
+					
+					
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsChimiques);
 		
 		JLabel labelTitreStock = new JLabel("Stock des plantes");
 		labelTitreStock.setForeground(new Color(0, 128, 0));
-		labelTitreStock.setFont(new Font("Snap ITC", Font.BOLD, 23));
+		labelTitreStock.setFont(new Font("Snap ITC", Font.BOLD, 24));
 		labelTitreStock.setBounds(388, 28, 280, 49);
 		panneauPrincipal.add(labelTitreStock);
 		
@@ -139,17 +162,24 @@ public class StockPlantes extends JFrame {
 		panelArbre.addMouseListener((MouseListener) new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            		Arbre arbre=new Arbre();
-                 arbre.setVisible(true);
-                 arbre.setLocationRelativeTo(null);
-                 dispose();
+            		Arbre arbre;
+					try {
+						arbre = new Arbre();
+						 arbre.setVisible(true);
+		                 arbre.setLocationRelativeTo(null);
+		                 dispose();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                
             }
         });
 		panneauPrincipal.add(panelArbre);
 		panelArbre.setLayout(null);
 		
 		JLabel labelImageArbre = new JLabel("");
-		labelImageArbre.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\arbre.jpg"));
+		labelImageArbre.setIcon(new ImageIcon("src\\images\\arbre.jpg"));
 		labelImageArbre.setBounds(10, 36, 182, 115);
 		panelArbre.add(labelImageArbre);
 		
@@ -176,16 +206,23 @@ public class StockPlantes extends JFrame {
 		panelArbuste.addMouseListener((MouseListener) new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            		Arbuste arbuste=new Arbuste();
-                 arbuste.setVisible(true);
-                 arbuste.setLocationRelativeTo(null);
-                 dispose();
+            		Arbuste arbuste;
+					try {
+						arbuste = new Arbuste();
+						 arbuste.setVisible(true);
+		                 arbuste.setLocationRelativeTo(null);
+		                 dispose();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                
             }
         });
 		panneauPrincipal.add(panelArbuste);
 		
 		JLabel labelImageArbuste = new JLabel("");
-		labelImageArbuste.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\arbuste.jpg"));
+		labelImageArbuste.setIcon(new ImageIcon("src\\images\\arbuste.jpg"));
 		labelImageArbuste.setBounds(10, 36, 182, 115);
 		panelArbuste.add(labelImageArbuste);
 		
@@ -212,16 +249,23 @@ public class StockPlantes extends JFrame {
 		panelFleur.addMouseListener((MouseListener) new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            		Fleur fleur=new Fleur();
-                 fleur.setVisible(true);
-                 fleur.setLocationRelativeTo(null);
-                 dispose();
+            		Fleur fleur;
+					try {
+						fleur = new Fleur();
+						 fleur.setVisible(true);
+		                 fleur.setLocationRelativeTo(null);
+		                 dispose();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                
             }
         });
 		panneauPrincipal.add(panelFleur);
 		
 		JLabel labelImageFleur = new JLabel("");
-		labelImageFleur.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\fleur.jpg"));
+		labelImageFleur.setIcon(new ImageIcon("src\\images\\fleur.jpg"));
 		labelImageFleur.setBounds(10, 37, 182, 109);
 		panelFleur.add(labelImageFleur);
 		
@@ -248,16 +292,23 @@ public class StockPlantes extends JFrame {
 		panelPlanteSucculente.addMouseListener((MouseListener) new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            		PlanteSucculente planteSucculente=new PlanteSucculente();
-            	planteSucculente.setVisible(true);
-            	planteSucculente.setLocationRelativeTo(null);
-                 dispose();
+            		PlanteSucculente planteSucculente;
+					try {
+						planteSucculente = new PlanteSucculente();
+						planteSucculente.setVisible(true);
+		            	planteSucculente.setLocationRelativeTo(null);
+		                 dispose();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+            	
             }
         });
 		panneauPrincipal.add(panelPlanteSucculente);
 		
 		JLabel labelImagePlanteSucculente = new JLabel("");
-		labelImagePlanteSucculente.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\plante succulente.jpg"));
+		labelImagePlanteSucculente.setIcon(new ImageIcon("src\\images\\plante_succulente.jpg"));
 		labelImagePlanteSucculente.setBounds(10, 37, 182, 109);
 		panelPlanteSucculente.add(labelImagePlanteSucculente);
 		
@@ -278,7 +329,7 @@ public class StockPlantes extends JFrame {
 		panelPlanteSucculente.add(labelNombrePlanteSucculente);
 		
 		JLabel label_logo = new JLabel("New label");
-		label_logo.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\palnt.png"));
+		label_logo.setIcon(new ImageIcon("src\\images\\palnt.png"));
 		label_logo.setBounds(20, 11, 150, 92);
 		panneauPrincipal.add(label_logo);
 		

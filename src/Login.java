@@ -70,7 +70,7 @@ public class Login extends JFrame {
         panel_1.setLayout(null);
         
         JLabel lblNewLabel_1 = new JLabel("New label");
-        lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\HP\\Downloads\\les-plantes (1).png"));
+        lblNewLabel_1.setIcon(new ImageIcon("src\\images\\logo2.png"));
         lblNewLabel_1.setBounds(-12, 65, 250, 365);
         panel_1.add(lblNewLabel_1);
         

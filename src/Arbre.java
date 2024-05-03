@@ -66,7 +66,7 @@ public class Arbre extends JFrame {
     }
 
 	
-	public Arbre() {
+	public Arbre() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
@@ -85,7 +85,7 @@ public class Arbre extends JFrame {
 		panel_gauche.setLayout(null);
 		
 		JButton btnPlantes = new JButton("Liste des plantes");
-		btnPlantes.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnPlantes.setFont(new Font("Arial", Font.BOLD, 15));
 		btnPlantes.setBorder(null);
 		btnPlantes.setForeground(new Color(255, 255, 255));
 		btnPlantes.setBounds(10, 22, 177, 23);
@@ -109,7 +109,7 @@ public class Arbre extends JFrame {
 		panel_gauche.add(btnPlantes);
 		
 		JButton btnStock = new JButton("Stock des plantes");
-		btnStock.setFont(new Font("Snap ITC", Font.BOLD, 15));
+		btnStock.setFont(new Font("Arial", Font.BOLD, 15));
 		btnStock.setBorder(null);
 		btnStock.setForeground(new Color(255, 255, 255));
 		btnStock.setBackground(new Color(0, 128, 0));
@@ -133,58 +133,126 @@ public class Arbre extends JFrame {
 		panel_gauche.add(btnStock);
 		
 		JButton btnProduitsPhysiques = new JButton("Produits physiques");
-		btnProduitsPhysiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
-		btnProduitsPhysiques.setBorder(null);
+		btnProduitsPhysiques.setFont(new Font("Arial", Font.BOLD, 15));
 		btnProduitsPhysiques.setForeground(new Color(255, 255, 255));
 		btnProduitsPhysiques.setBackground(new Color(0, 128, 0));
 		btnProduitsPhysiques.setBounds(10, 226, 177, 23);
 		btnProduitsPhysiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsPhysiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduitPhysique produitphysique;
+					produitphysique = new ProduitPhysique();
+					produitphysique.frame.setVisible(true);
+					produitphysique.frame.setLocationRelativeTo(null);
+             dispose();
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsPhysiques);
 		
 		JButton btnProduitsChimiques = new JButton("Produits chimiques");
-		btnProduitsChimiques.setFont(new Font("Snap ITC", Font.BOLD, 15));
-		btnProduitsChimiques.setBorder(null);
+		btnProduitsChimiques.setFont(new Font("Arial", Font.BOLD, 15));
 		btnProduitsChimiques.setForeground(new Color(255, 255, 255));
 		btnProduitsChimiques.setBackground(new Color(0, 128, 0));
 		btnProduitsChimiques.setBounds(10, 260, 177, 23);
 		btnProduitsChimiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsChimiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduiTChemiques produitchemiques;
+					
+						produitchemiques = new ProduiTChemiques();
+						produitchemiques.frame.setVisible(true);
+						produitchemiques.frame.setLocationRelativeTo(null);
+                 dispose();
+					
+					
+            		
+            }
+        });
 		panel_gauche.add(btnProduitsChimiques);
 		
 		JButton btnArbre = new JButton("Arbres");
 		btnArbre.setBackground(new Color(0, 128, 0));
 		btnArbre.setForeground(new Color(128, 64, 0));
-		btnArbre.setFont(new Font("Snap ITC", Font.BOLD, 12));
+		btnArbre.setFont(new Font("Arial", Font.BOLD, 12));
 		btnArbre.setBorder(null);
 		btnArbre.setBounds(10, 85, 89, 23);
 		panel_gauche.add(btnArbre);
 		
+		
 		JButton btnArbuste = new JButton("Arbustes");
 		btnArbuste.setForeground(new Color(255, 255, 255));
-		btnArbuste.setFont(new Font("Snap ITC", Font.BOLD, 12));
+		btnArbuste.setFont(new Font("Arial", Font.BOLD, 12));
 		btnArbuste.setBorder(null);
 		btnArbuste.setBackground(new Color(0, 128, 0));
 		btnArbuste.setBounds(5, 110, 117, 23);
+		btnArbuste.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+        		Arbuste arbuste;
+					try {
+						arbuste = new Arbuste();
+						arbuste.setVisible(true);
+						arbuste.setLocationRelativeTo(null);
+             dispose();
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+        		
+        }
+       });
 		panel_gauche.add(btnArbuste);
 		
 		JButton btnFleur = new JButton("Fleurs");
 		btnFleur.setForeground(new Color(255, 255, 255));
-		btnFleur.setFont(new Font("Snap ITC", Font.BOLD, 12));
+		btnFleur.setFont(new Font("Arial", Font.BOLD, 12));
 		btnFleur.setBorder(null);
 		btnFleur.setBackground(new Color(0, 128, 0));
 		btnFleur.setBounds(10, 135, 89, 23);
+		btnFleur.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+       		Fleur fleur;
+					try {
+						fleur = new Fleur();
+						fleur.setVisible(true);
+						fleur.setLocationRelativeTo(null);
+	         dispose();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+       		
+       }
+      });
 		panel_gauche.add(btnFleur);
 		
 		JButton btnPlanteSucculente = new JButton("Plantes succulentes");
 		btnPlanteSucculente.setForeground(new Color(255, 255, 255));
-		btnPlanteSucculente.setFont(new Font("Snap ITC", Font.BOLD, 12));
+		btnPlanteSucculente.setFont(new Font("Arial", Font.BOLD, 12));
 		btnPlanteSucculente.setBorder(null);
 		btnPlanteSucculente.setBackground(new Color(0, 128, 0));
-		btnPlanteSucculente.setBounds(6, 160, 187, 23);
+		btnPlanteSucculente.setBounds(0, 160, 187, 23);
+		btnPlanteSucculente.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 PlanteSucculente planteSucculente;
+					try {
+						planteSucculente = new PlanteSucculente();
+						planteSucculente.setVisible(true);
+						planteSucculente.setLocationRelativeTo(null);
+            dispose();
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+       		
+       }
+      });
 		panel_gauche.add(btnPlanteSucculente);
 		
-		JLabel labelTitre = new JLabel("Gestion des plantes");
+		JLabel labelTitre = new JLabel("Stock des arbres");
 		labelTitre.setBounds(383, 11, 289, 42);
-		labelTitre.setFont(new Font("Snap ITC", Font.BOLD, 23));
+		labelTitre.setFont(new Font("Snap ITC", Font.BOLD, 24));
 		labelTitre.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitre.setForeground(new Color(0, 128, 0));
 		panneauPrincipal.add(labelTitre);
@@ -230,7 +298,7 @@ public class Arbre extends JFrame {
 		champ_recherche.setColumns(10);
 		
 		JLabel label_logo = new JLabel("New label");
-		label_logo.setIcon(new ImageIcon("C:\\Users\\hp\\eclipse-workspace-new-version\\GestionPepiniere\\images\\palnt.png"));
+		label_logo.setIcon(new ImageIcon("src\\images\\palnt.png"));
 		label_logo.setBounds(20, 11, 150, 92);
 		panneauPrincipal.add(label_logo);
 		
