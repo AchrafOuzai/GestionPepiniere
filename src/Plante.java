@@ -25,8 +25,20 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -40,6 +52,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -285,11 +298,11 @@ public class Plante extends JFrame {
 		labelTitre.setForeground(new Color(0, 128, 0));
 		panneauPrincipal.add(labelTitre);
 		
-		JLabel labelImage = new JLabel("Image :");
-		labelImage.setBounds(513, 168, 93, 27);
-		labelImage.setFont(new Font("Tahoma", Font.BOLD, 17));
-		labelImage.setForeground(new Color(0, 128, 0));
-		panneauPrincipal.add(labelImage);
+		JLabel labelImagetext = new JLabel("Image :");
+		labelImagetext.setBounds(513, 168, 93, 27);
+		labelImagetext.setFont(new Font("Tahoma", Font.BOLD, 17));
+		labelImagetext.setForeground(new Color(0, 128, 0));
+		panneauPrincipal.add(labelImagetext);
 		
 		JButton btnChoix_image = new JButton("Choisir une image");
 		btnChoix_image.setBounds(546, 214, 140, 23);
@@ -300,7 +313,13 @@ public class Plante extends JFrame {
                 int resultat = fileChooser.showOpenDialog(null);
                 if (resultat == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
-                    
+                    ImageIcon im = new ImageIcon(file.getAbsolutePath());
+                    int largeur = labelImage.getWidth();  
+                    int hauteur = labelImage.getHeight();
+                    Image image = im.getImage().getScaledInstance(largeur, hauteur, Image.SCALE_SMOOTH);
+                    ImageIcon imgNouv = new ImageIcon(image);
+                    labelImage.setIcon(imgNouv);
+                    champ_image.setText(file.getAbsolutePath());
                 }
 			}
 		});
@@ -353,14 +372,37 @@ public class Plante extends JFrame {
 		labelImage = new JLabel("");
 		labelImage.setForeground(new Color(0, 0, 0));
 		labelImage.setBackground(new Color(255, 255, 255));
-		labelImage.setBounds(434, 206, 96, 37);
+		labelImage.setBounds(447, 206, 96, 37);
 		panneauPrincipal.add(labelImage);
 		
 		champ_image = new JTextField();
 		champ_image.setEnabled(false);
-		champ_image.setBounds(433, 206, 77, 37);
+		champ_image.setBounds(352, 206, 95, 37);
 		panneauPrincipal.add(champ_image);
 		champ_image.setColumns(10);
+		champ_image.setBorder(null);
+		
+		JButton btnImporter = new JButton("Importer");
+		btnImporter.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnImporter.setBounds(209, 322, 89, 23);
+		btnImporter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	importerPlantes();
+              
+            }
+        });
+		panneauPrincipal.add(btnImporter);
+		
+		JButton btnExporter = new JButton("Exporter");
+		btnExporter.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExporter.setBounds(308, 322, 89, 23);
+		btnExporter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               exporterPlantes();
+                
+            }
+        });
+		panneauPrincipal.add(btnExporter);
 		
 		
 		
@@ -388,7 +430,7 @@ public class Plante extends JFrame {
                     champ_description.setText(description);
                     comboBoxType.setSelectedItem(type);
                     champ_prix.setText(String.valueOf(prix));
-                    
+                    champ_image.setText("");
                     
                     labelImage.setIcon(imageIcon);
                 }
@@ -397,10 +439,8 @@ public class Plante extends JFrame {
     }
 	
     private void ajouterPlante(String nom,String description,String type, double prix, String image) throws IOException {
-    	 String prixText = champ_prix.getText().trim();
-    	if (nom.equals("") || description.equals("") || type.equals("") || image.equals("") || prixText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Erreur: Entrée invalide. Veuillez réessayer.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }else {
+    	 
+    	
         try {
         	byte[] img = null;
             if (image != null && !image.isEmpty()) {
@@ -427,7 +467,7 @@ public class Plante extends JFrame {
             afficherPlantes();
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'ajout de la plante:" + e.getMessage());
-        }}
+        }
     }
 
     private void afficherPlantes() {
@@ -624,6 +664,145 @@ public class Plante extends JFrame {
         champ_description.setText("");
         comboBoxType.setSelectedItem("Choisir le type");
         labelImage.setIcon(null);
-        //textField_3.setText("");
+        champ_image.setText("");
+    }
+    
+    
+    private void importerPlantes() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Importer XML ");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+        int resultat = fileChooser.showOpenDialog(null);
+        if (resultat == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+                Document document = documentBuilder.parse(selectedFile);
+
+                Element rootElement = document.getDocumentElement();
+
+         
+                NodeList produitNodes = rootElement.getElementsByTagName("plante");
+                for (int i = 0; i < produitNodes.getLength(); i++) {
+                    Element produitElement = (Element) produitNodes.item(i);
+
+                  
+                    String nom = produitElement.getElementsByTagName("nom").item(0).getTextContent();
+                    String description = produitElement.getElementsByTagName("description").item(0).getTextContent();
+                    String type = produitElement.getElementsByTagName("type").item(0).getTextContent();
+
+                   
+                    double prix = Double.parseDouble(produitElement.getElementsByTagName("prix").item(0).getTextContent());
+
+                   
+                    
+
+               
+                    String imag = produitElement.getElementsByTagName("image").item(0).getTextContent();
+
+                  
+                    ajouterPlante(nom,description,type, prix,imag);
+                }
+
+                System.out.println("donnees importees avec succes");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    
+  
+    private void exporterPlantes() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Exporter XML ");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                Document doc = docBuilder.newDocument();
+
+                
+                Element rootElement = doc.createElement("plantes");
+                doc.appendChild(rootElement);
+
+             
+                DefaultTableModel model = (DefaultTableModel) table_plantes.getModel();
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    Element produitElement = doc.createElement("plante");
+                    rootElement.appendChild(produitElement);
+
+                    Element nomElement = doc.createElement("nom");
+                    nomElement.appendChild(doc.createTextNode(model.getValueAt(i, 1).toString()));
+                    produitElement.appendChild(nomElement);
+                    
+                    Element descriptionElement = doc.createElement("description");
+                    descriptionElement.appendChild(doc.createTextNode(model.getValueAt(i, 2).toString()));
+                    produitElement.appendChild(descriptionElement);
+                    
+                    
+                    for (int ligne = 0; ligne < table_plantes.getRowCount(); ligne++) {
+                        
+
+                        
+                        String t = (String) table_plantes.getValueAt(ligne, 3); 
+
+                        
+                        Element typeElement = doc.createElement("type");
+                        typeElement.appendChild(doc.createTextNode(t));
+                        produitElement.appendChild(typeElement);
+
+                        
+                        rootElement.appendChild(produitElement);
+                    }
+                    
+
+                    Element prixElement = doc.createElement("prix");
+                    prixElement.appendChild(doc.createTextNode(model.getValueAt(i, 4).toString()));
+                    produitElement.appendChild(prixElement);
+
+                   
+                    String cheminImage = model.getValueAt(i, 5).toString();
+                    File imagg = new File(cheminImage);
+                    if (!imagg.isAbsolute()) {
+                        
+                    	cheminImage = imagg.getAbsolutePath();
+                    }
+
+                    Element imagePathElement = doc.createElement("image");
+                    imagePathElement.appendChild(doc.createTextNode(cheminImage));
+                    produitElement.appendChild(imagePathElement);
+                }
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "oui");
+                DOMSource source = new DOMSource(doc);
+                StreamResult result1 = new StreamResult(selectedFile);
+                transformer.transform(source, result1);
+
+             
+                copierImages(model, selectedFile.getParentFile());
+
+                System.out.println("donnees exportees avec succes");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    private void copierImages(DefaultTableModel model, File destination) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String im = model.getValueAt(i, 4).toString();
+            File srcFile = new File(im);
+            File file = new File(destination, srcFile.getName());
+            try {
+                Files.copy(srcFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
