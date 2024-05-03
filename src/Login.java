@@ -74,7 +74,7 @@ public class Login extends JFrame {
         lblNewLabel_1.setBounds(-12, 65, 250, 365);
         panel_1.add(lblNewLabel_1);
         
-        JLabel lblUsername = new JLabel("Nom Utilisateut");
+        JLabel lblUsername = new JLabel("Nom Utilisateur");
         lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
         lblUsername.setForeground(new Color(5, 127, 26));
         lblUsername.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -83,7 +83,7 @@ public class Login extends JFrame {
         panel.add(lblUsername);
         
         JLabel lblNewLabel = new JLabel("New label");
-        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\HP\\palntE.png"));
+        lblNewLabel.setIcon(new ImageIcon("src\\images\\palnt.png"));
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setBounds(360, 57, 138, 96);
         panel.add(lblNewLabel);
@@ -96,12 +96,12 @@ public class Login extends JFrame {
         label_1.setBounds(242, 11, 336, 34);
         panel.add(label_1);
         
-        JLabel lblMotPass = new JLabel("Mot Passe");
+        JLabel lblMotPass = new JLabel("Mot de Passe");
         lblMotPass.setHorizontalAlignment(SwingConstants.CENTER);
         lblMotPass.setForeground(new Color(5, 127, 26));
         lblMotPass.setFont(new Font("Arial", Font.PLAIN, 14));
         lblMotPass.setBorder(new EmptyBorder(10, 0, 0, 0));
-        lblMotPass.setBounds(224, 236, 139, 34);
+        lblMotPass.setBounds(232, 236, 139, 34);
         panel.add(lblMotPass);
         
         textField_1 = new JTextField();
