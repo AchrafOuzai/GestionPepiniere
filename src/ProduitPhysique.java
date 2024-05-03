@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -29,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -101,7 +103,7 @@ public class  ProduitPhysique{
                     double prix = (double) table.getValueAt(selectedRow, 2);
                     String description = (String) table.getValueAt(selectedRow, 3);
                     ImageIcon imageIcon = (ImageIcon) table.getValueAt(selectedRow, 4);
-                    // Set the data to the text fields
+                   
                     textnom.setText(nom);
                     textField.setText(String.valueOf(prix));
                     textDesc.setText(description);
@@ -342,12 +344,17 @@ public class  ProduitPhysique{
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          frame.getContentPane().setLayout(null);
 
-         JLabel lblNewLabel = new JLabel("Produit physique");
-         lblNewLabel.setForeground(new Color(0, 255, 0));
+         JLabel lblNewLabel = new JLabel("Produits physiques");
+         
+         lblNewLabel.setBounds(383, 11, 289, 42);
+         lblNewLabel.setFont(new Font("Snap ITC", Font.BOLD, 25));
+ 		
+ 		lblNewLabel.setForeground(new Color(0, 128, 0));
+         
+       
          lblNewLabel.setToolTipText("");
-         lblNewLabel.setBackground(SystemColor.textHighlight);
-         lblNewLabel.setFont(new Font("Vladimir Script", Font.BOLD, 50));
-         lblNewLabel.setBounds(345, 24, 344, 59);
+        
+         
          frame.getContentPane().add(lblNewLabel);
 
          JPanel panel = new JPanel();
@@ -360,12 +367,12 @@ public class  ProduitPhysique{
 
          JLabel labelNom = new JLabel("Nom :");
          labelNom.setFont(new Font("Agency FB", Font.BOLD, 20));
-         labelNom.setBounds(10, 52, 60, 24);
+         labelNom.setBounds(4, 46, 54, 18);
          panel.add(labelNom);
 
          JLabel labelPrix = new JLabel("Prix :");
          labelPrix.setFont(new Font("Agency FB", Font.BOLD, 20));
-         labelPrix.setBounds(10, 106, 60, 24);
+         labelPrix.setBounds(4, 95, 54, 18);
          panel.add(labelPrix);
 
          JLabel labelImage = new JLabel("Image :");
@@ -376,13 +383,13 @@ public class  ProduitPhysique{
          imageLabel.setBounds(86, 233, 200, 44); 
          panel.add(imageLabel);
          textnom = new JTextField();
-         textnom.setBounds(84, 47, 179, 42);
+         textnom.setBounds(84, 47, 179, 26);
          panel.add(textnom);
          textnom.setColumns(10);
 
          textField = new JTextField();
          textField.setColumns(10);
-         textField.setBounds(84, 100, 179, 44);
+         textField.setBounds(84, 100, 179, 26);
          panel.add(textField);
 
          imageTextField = new JTextField();
@@ -391,7 +398,7 @@ public class  ProduitPhysique{
          imageTextField.setBounds(86, 233, 76, 44);
          panel.add(imageTextField);
 
-         JButton browseButton = new JButton("Browse");
+         JButton browseButton = new JButton("Choisir");
          browseButton.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  JFileChooser fileChooser = new JFileChooser();
@@ -424,28 +431,32 @@ public class  ProduitPhysique{
                 ajouterProduit(nom, prix,description, imagePath);
             }
         });
-        btnNewButton.setBackground(new Color(128, 255, 128));
-        btnNewButton.setBounds(216, 486, 89, 39);
+        
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        btnNewButton.setBackground(new Color(0, 128, 0));
+        btnNewButton.setForeground(new Color(255, 255, 255));
+        btnNewButton.setBounds(213, 483, 86, 36);
         frame.getContentPane().add(btnNewButton);
         JButton btnModifier = new JButton("Modifier");
         btnModifier.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String nom = textnom.getText(); // Retrieve the product name from the text field
+                String nom = textnom.getText(); 
                 double prix = Double.parseDouble(textField.getText());
                 String description = textDesc.getText();
-                String imagePath = imageTextField.getText(); // Retrieve the image file path
+                String imagePath = imageTextField.getText(); 
                 modifierProduit(nom, prix,description, imagePath);
             }
         });
 
-        btnModifier.setBackground(new Color(128, 255, 255));
-        btnModifier.setBounds(314, 486, 89, 39);
+        btnModifier.setBackground(new Color(0, 128, 192));
+        btnModifier.setBounds(313, 483, 86, 36);
+        btnModifier.setForeground(new Color(255, 255, 255));
         frame.getContentPane().add(btnModifier);
         JButton btnSupprimer = new JButton("Supprimer");
         btnSupprimer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) { // Ensure a row is selected
+                if (selectedRow != -1) { 
                     int id_physique = (int) table.getValueAt(selectedRow, 0);
                    
                     supprimerProduit(id_physique);
@@ -456,17 +467,18 @@ public class  ProduitPhysique{
             }
         });
 
-        btnSupprimer.setBackground(new Color(255, 128, 128));
-        btnSupprimer.setBounds(413, 486, 89, 39);
+        btnSupprimer.setBackground(new Color(255, 0, 0));
+		btnSupprimer.setForeground(new Color(255, 255, 255));
+        btnSupprimer.setBounds(413, 483, 105, 36);
         frame.getContentPane().add( btnSupprimer);
-        JButton btnClear = new JButton("Clear");
+        JButton btnClear = new JButton("Vider");
         btnClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clearFields();
             }
         });
         btnClear.setBackground(new Color(255, 240, 245));
-        btnClear.setBounds(216, 123, 89, 39);
+        btnClear.setBounds(213, 120, 86, 36);
         frame.getContentPane().add(btnClear);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -496,7 +508,7 @@ public class  ProduitPhysique{
 
         textField_2 = new JTextField();
         textField_2.setColumns(10);
-        textField_2.setBounds(108, 17, 238, 26);
+        textField_2.setBounds(108, 17, 220, 26);
         panelPechercher.add(textField_2);
 
         JLabel labelNom_3 = new JLabel("NomProduit :\r\n");
@@ -504,7 +516,7 @@ public class  ProduitPhysique{
         labelNom_3.setBounds(10, 14, 112, 24);
         panelPechercher.add(labelNom_3);
 
-        JButton searchButton = new JButton("Search");
+        JButton searchButton = new JButton("Rechercher");
         searchButton.setBackground(new Color(255, 218, 185));
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -512,50 +524,98 @@ public class  ProduitPhysique{
                 performSearch(searchQuery);
             }
         });
-        searchButton.setBounds(356, 17, 89, 26); 
+        searchButton.setBounds(330, 17, 115, 26); 
         panelPechercher.add(searchButton);
-        JLabel lblListesDesProduits = new JLabel("Listes des Produits physique");
+        JLabel lblListesDesProduits = new JLabel("Listes des Produits physiques");
         lblListesDesProduits.setToolTipText("");
-        lblListesDesProduits.setForeground(new Color(0, 255, 0));
+        lblListesDesProduits.setForeground(new Color(5, 127, 26));
         lblListesDesProduits.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         lblListesDesProduits.setBackground(new Color(0, 255, 0));
         lblListesDesProduits.setBounds(615, 155, 317, 50);
         frame.getContentPane().add(lblListesDesProduits);
         
-        JPanel panelPlant = new JPanel();
-        panelPlant.setBackground(new Color(50, 205, 50));
-        panelPlant.setForeground(new Color(50, 205, 50));
-        panelPlant.setBounds(0, 123, 194, 631);
-        frame.getContentPane().add(panelPlant);
-        panelPlant.setLayout(null);
+        JPanel panel_gauche = new JPanel();
+        panel_gauche.setBounds(0, 147, 207, 452);
+		panel_gauche.setBackground(new Color(0, 128, 0));
+		frame.getContentPane().add(panel_gauche);
+		panel_gauche.setLayout(null);
+		
+		JButton btnPlantes = new JButton("Liste des plantes");
+		btnPlantes.setFont(new Font("Arial", Font.BOLD, 15));
+		btnPlantes.setForeground(new Color(255, 255, 255));
+		btnPlantes.setBounds(5, 22, 177, 23);
+		btnPlantes.setBackground(new Color(0, 128, 0));
+		btnPlantes.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnPlantes.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		Plante plante;
+					try {
+						plante = new Plante();
+						plante.setVisible(true);
+						plante.setLocationRelativeTo(null);
+                 frame.dispose();
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+            		
+            }
+        });
+		panel_gauche.add(btnPlantes);
+		
+		JButton btnStock = new JButton("Stock des plantes");
+		btnStock.setFont(new Font("Arial", Font.BOLD, 15));
+		btnStock.setForeground(new Color(255, 255, 255));
+		btnStock.setBackground(new Color(0, 128, 0));
+		btnStock.setBounds(5, 56, 177, 23);
+		btnStock.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnStock.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		StockPlantes stockPlantes;
+					try {
+						stockPlantes = new StockPlantes();
+						stockPlantes.setVisible(true);
+            		stockPlantes.setLocationRelativeTo(null);
+                 frame.dispose();
+					} catch (SQLException e1) {
+						
+						e1.printStackTrace();
+					}
+            		
+            }
+        });
+		panel_gauche.add(btnStock);
+		
+		JButton btnProduitsPhysiques = new JButton("Produits physiques");
+		btnProduitsPhysiques.setFont(new Font("Arial", Font.BOLD, 15));
+		btnProduitsPhysiques.setForeground(new Color(255, 255, 255));
+		btnProduitsPhysiques.setBackground(new Color(0, 128, 0));
+		btnProduitsPhysiques.setBounds(10, 90, 177, 23);
+		btnProduitsPhysiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		panel_gauche.add(btnProduitsPhysiques);
+		
+		JButton btnProduitsChimiques = new JButton("Produits chimiques");
+		btnProduitsChimiques.setFont(new Font("Arial", Font.BOLD, 15));
+		btnProduitsChimiques.setForeground(new Color(255, 255, 255));
+		btnProduitsChimiques.setBackground(new Color(0, 128, 0));
+		btnProduitsChimiques.setBounds(10, 124, 177, 23);
+		btnProduitsChimiques.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		btnProduitsChimiques.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            		ProduiTChemiques produitchemiques;
+					
+						produitchemiques = new ProduiTChemiques();
+						produitchemiques.frame.setVisible(true);
+						produitchemiques.frame.setLocationRelativeTo(null);
+                 frame.dispose();
+					
+					
+            		
+            }
+        });
+		panel_gauche.add(btnProduitsChimiques);
+		
         
-        JButton btnPlant= new JButton("Plantes");
-        btnPlant.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnPlant.setForeground(new Color(255, 255, 255));
-        btnPlant.setBackground(new Color(50, 205, 50));
-        btnPlant.setBounds(35, 113, 120, 39);
-        panelPlant.add(btnPlant);
-        
-        JButton btnPlant1 = new JButton("Plantes");
-        btnPlant1.setForeground(Color.WHITE);
-        btnPlant1.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnPlant1.setBackground(new Color(50, 205, 50));
-        btnPlant1.setBounds(35, 183, 120, 39);
-        panelPlant.add(btnPlant1);
-        
-        JButton btnPlant2 = new JButton("Plantes");
-        btnPlant2.setForeground(Color.WHITE);
-        btnPlant2.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnPlant2.setBackground(new Color(50, 205, 50));
-        btnPlant2.setBounds(35, 251, 120, 39);
-        panelPlant.add( btnPlant2);
-        
-        JButton  btnPlant3 = new JButton("Plantes");
-        btnPlant3.setForeground(Color.WHITE);
-        btnPlant3.setFont(new Font("Tahoma", Font.BOLD, 20));
-        btnPlant3.setBackground(new Color(50, 205, 50));
-        btnPlant3 .setBounds(35, 319, 120, 39);
-        panelPlant.add(btnPlant3 );
         
         JPanel panel_3 = new JPanel();
         panel_3.setBackground(new Color(255, 255, 255));
@@ -564,21 +624,12 @@ public class  ProduitPhysique{
         panel_3.setLayout(null);
         
         JLabel lblNewLabel_2 = new JLabel("New label");
-        lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\hp\\Desktop\\S_6\\J2ee\\palnt.png"));
+        lblNewLabel_2.setIcon(new ImageIcon("src\\images\\palnt.png"));
         lblNewLabel_2.setBounds(10, 0, 147, 117);
         panel_3.add(lblNewLabel_2);
         
-        JPanel panel_4 = new JPanel();
-        panel_4.setBackground(new Color(255, 255, 255));
-        panel_4.setBounds(826, 0, 165, 122);
-        frame.getContentPane().add(panel_4);
-        panel_4.setLayout(null);
         
-        JLabel lblNewLabel_3 = new JLabel("");
-        lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\hp\\Desktop\\S_6\\J2ee\\plante.png"));
-        lblNewLabel_3.setBounds(30, 0, 145, 119);
-        panel_4.add(lblNewLabel_3);
-        JButton importButton = new JButton("Importer XML");
+        JButton importButton = new JButton("Importer");
         importButton.setBackground(new Color(250, 250, 210));
         importButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -586,10 +637,10 @@ public class  ProduitPhysique{
               
             }
         });
-        importButton.setBounds(216, 545, 137, 39);
+        importButton.setBounds(795, 70, 86, 33);
         frame.getContentPane().add(importButton);
 
-        JButton exportButton = new JButton("Exporter XML");
+        JButton exportButton = new JButton("Exporter");
         exportButton.setBackground(new Color(250, 240, 230));
         exportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -597,7 +648,7 @@ public class  ProduitPhysique{
                 
             }
         });
-        exportButton.setBounds(363, 545, 139, 39);
+        exportButton.setBounds(890, 70, 86, 33);
         frame.getContentPane().add(exportButton);}
     private void importFromXML() {
         JFileChooser fileChooser = new JFileChooser();
@@ -711,6 +762,9 @@ public class  ProduitPhysique{
             }
         }
     }
+
+
+
     }
 
 

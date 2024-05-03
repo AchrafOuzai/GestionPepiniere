@@ -46,7 +46,7 @@ public class Chargement extends JFrame {
         
         JLabel label = new JLabel("label");
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setIcon(new ImageIcon("C:\\Users\\HP\\palntE.png"));
+        label.setIcon(new ImageIcon("src\\images\\palnt.png"));
         label.setBounds(123, 45, 147, 112);
         panell.add(label);
         
