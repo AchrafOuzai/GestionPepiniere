@@ -29,19 +29,9 @@ public class StockPlantes extends JFrame {
 	private Connection conn;
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StockPlantes frame = new StockPlantes();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	 /**
+     * Méthode pour établir la connexion à la base de données.
+     */
 	private void connectionBaseDonnees() {
 	       
 
@@ -54,7 +44,11 @@ public class StockPlantes extends JFrame {
         }
     }
 
-	
+	 /**
+     * Constructeur de la classe StockPlantes.
+     * Ce constructeur initialise l'interface utilisateur et établit la connexion à la base de données.
+     * @throws SQLException si une erreur SQL survient
+     */
 	public StockPlantes() throws SQLException {
 		
 		
@@ -352,6 +346,11 @@ public class StockPlantes extends JFrame {
 
 	    return compteur;
 	}
+	 /**
+     * Méthode pour obtenir le nombre d'arbres dans le stock.
+     * @return le nombre d'arbres dans le stock
+     * @throws SQLException si une erreur SQL survient
+     */
 	public int nombreArbuste() throws SQLException {
 	    int compteur = 0;
 	    String requete = "SELECT count(*) FROM plante where type='Arbuste'";
@@ -367,7 +366,9 @@ public class StockPlantes extends JFrame {
 	    statement.close();
 
 	    return compteur;
-	}
+	} 
+	// Les méthodes suivantes (nombreArbuste, nombreFleur, nombrePlanteSucculente) sont similaires
+    // Elles retournent le nombre d'arbustes, de fleurs et de plantes succulentes respectivement
 	public int nombreFleur() throws SQLException {
 	    int compteur = 0;
 	    String requete = "SELECT count(*) FROM plante where type='Fleur'";

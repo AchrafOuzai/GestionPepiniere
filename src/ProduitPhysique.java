@@ -59,19 +59,7 @@ public class  ProduitPhysique{
     private JLabel imageLabel;
     private JTextField textDesc;
     
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ProduitPhysique window = new  ProduitPhysique(); 
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
+  
   
     
     public ProduitPhysique() {
@@ -80,6 +68,7 @@ public class  ProduitPhysique{
         afficherProduits();
         addTableSelectionListener();
     }
+    // Méthode pour établir la connexion à la base de données
     private void connectToDatabase() {
         String url = "jdbc:mysql://localhost:3306/gestionpepiniere";
         String username = "root";
@@ -93,6 +82,7 @@ public class  ProduitPhysique{
             e.printStackTrace();
         }
     }
+    // Méthode pour ajouter un écouteur de sélection à la table
     private void addTableSelectionListener() {
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -113,6 +103,8 @@ public class  ProduitPhysique{
             }
         });
     }
+    
+    // Méthode pour ajouter un produit à la base de données
     private void ajouterProduit(String nom, Double prix, String description, String imagePath) {
         try {
             byte[] imageData = null;
@@ -149,7 +141,7 @@ public class  ProduitPhysique{
         }
     }
 
-
+    // Méthode pour modifier un produit dans la base de données
     private void modifierProduit(String nom, double prix,String description, String imagePath) {
         try {
             
@@ -209,7 +201,7 @@ public class  ProduitPhysique{
             System.out.println("problem : " + e.getMessage());
         }
     }
-
+    // Méthode pour afficher  les produits dans la base de données
     private void afficherProduits() {
         try {
         	String query = "SELECT id_physique, nom_physique, prix_physique, description_physique, image_physique FROM produit_physique";
@@ -256,7 +248,7 @@ public class  ProduitPhysique{
             System.out.println("problem " + e.getMessage());
         }
     }
-    
+    // Méthode pour supprimer un produit dans la base de données
     private void supprimerProduit(int id_physique) {
         try {
             String message = "Êtes-vous sûr de vouloir supprimer ce produit ?";
@@ -284,7 +276,7 @@ public class  ProduitPhysique{
     }
   
 
-
+ // Méthode pour effectuer une recherche dans la base de données en fonction du nom du produit chimique
     private void performSearch(String searchQuery) {
         try {
             String query = "SELECT * FROM produit_physique WHERE nom_physique LIKE ?";
@@ -323,7 +315,7 @@ public class  ProduitPhysique{
             System.out.println("Error during search: " + ex.getMessage());
         }
     }
-
+ // Méthode pour initialiser l'interface utilisateur et ses composants
 
     private void clearFields() {
         textnom.setText("");
@@ -333,7 +325,7 @@ public class  ProduitPhysique{
     }
 
     
-  
+ // Méthode pour initialiser l'interface utilisateur
     private void initialize() {
     	
     	 frame = new JFrame();
@@ -650,6 +642,8 @@ public class  ProduitPhysique{
         });
         exportButton.setBounds(890, 70, 86, 33);
         frame.getContentPane().add(exportButton);}
+    
+ // Méthode pour importer des données depuis un fichier XML
     private void importFromXML() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Importer XML ");
@@ -693,7 +687,8 @@ public class  ProduitPhysique{
     }
 
     
-  
+    
+    // Méthode pour exporter les données vers un fichier XML
     private void exportToXML() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Exporter XML ");
@@ -727,10 +722,21 @@ public class  ProduitPhysique{
                     descriptionElement.appendChild(doc.createTextNode(model.getValueAt(i, 3).toString()));
                     produitElement.appendChild(descriptionElement);
 
+
+                    String cheminImage = model.getValueAt(i, 4).toString();
+                    File imagg = new File(cheminImage);
+                    if (!imagg.isAbsolute()) {
+                        
+                    	cheminImage = imagg.getAbsolutePath();
+                    }
                     Element imagePathElement = doc.createElement("imagePath");
-                    imagePathElement.appendChild(doc.createTextNode(model.getValueAt(i, 4).toString()));
+                    imagePathElement.appendChild(doc.createTextNode(
+                        	cheminImage));
                     produitElement.appendChild(imagePathElement);
+                    
                 }
+
+                
 
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
@@ -749,7 +755,7 @@ public class  ProduitPhysique{
         }
     }
 
-  
+ // Méthode pour copier les images associées aux produits chimiques
     private void copyImages(DefaultTableModel model, File destinationFolder) {
         for (int i = 0; i < model.getRowCount(); i++) {
             String imagePath = model.getValueAt(i, 4).toString();
