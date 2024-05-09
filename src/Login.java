@@ -26,32 +26,14 @@ import java.sql.SQLException;
 import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
-
 	
 	private JPanel contentPane;
 	private JTextField textField_1;
-	 private Connection connection;
-	 private JPasswordField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private Connection connection;
+	private JPasswordField textField;
 	
 	public Login() {
-		connection();
+		connection();// Établir la connexion 
 		setUndecorated(true);
 	       
         setSize(600, 380);
@@ -88,7 +70,7 @@ public class Login extends JFrame {
         lblNewLabel.setBounds(360, 57, 138, 96);
         panel.add(lblNewLabel);
         
-        JLabel label_1 = new JLabel("Bienvenue dans Mon Pépinière");
+        JLabel label_1 = new JLabel("Bienvenue dans Notre Pépinière");
         label_1.setHorizontalAlignment(SwingConstants.CENTER);
         label_1.setForeground(new Color(5, 127, 26));
         label_1.setFont(new Font("Arial", Font.BOLD, 20));
@@ -118,6 +100,7 @@ public class Login extends JFrame {
         btnNewButton.setFont(new Font("Century Gothic", Font.BOLD, 17));
         btnNewButton.setBounds(383, 310, 154, 28);
         panel.add(btnNewButton);
+        
         
         JLabel lblX = new JLabel("X");
         lblX.addMouseListener(new MouseAdapter() {
@@ -157,6 +140,7 @@ public class Login extends JFrame {
             }
         });
        
+        
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = textField_1.getText();
@@ -182,6 +166,8 @@ public class Login extends JFrame {
         });
 
 	}
+	
+	// Méthode pour établir la connexion à la base de données MySQL
 	private void connection() {
         String url = "jdbc:mysql://localhost:3306/gestionpepiniere";
         String username = "root";
@@ -195,6 +181,9 @@ public class Login extends JFrame {
             e.printStackTrace();
         }
     }
+	
+	
+	// Méthode pour vérifier les informations  d'utilisateur 
 	private boolean checkLogin(String nom_utilisateur, String mot_passe) {
 	    String query = "SELECT * FROM administrateur WHERE nom_utilisateur = ? AND mot_passe = ?";
 	    try {

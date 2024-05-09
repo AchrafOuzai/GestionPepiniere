@@ -37,22 +37,9 @@ public class Fleur extends JFrame {
 	private JTable table_plantes;
 	private JTextField champ_recherche;
 	private Connection conn;
-	private byte[] image;
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Arbre frame = new Arbre();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// Méthode pour établir la connexion à la base de données MySQL
 	private void connectionBaseDonnees() {
 	       
 
@@ -308,11 +295,13 @@ public class Fleur extends JFrame {
 		
 		
 		connectionBaseDonnees();
-		afficherPlantes();
+		afficherFleurs();
 
 	}
 	
-	private void afficherPlantes() {
+	
+	// Méthode pour afficher les plantes dans la table
+	private void afficherFleurs() {
         try {
             String req = "SELECT * FROM plante where type='Fleur'";
 
@@ -335,6 +324,7 @@ public class Fleur extends JFrame {
             
             table_plantes.getColumnModel().getColumn(5).setCellRenderer(image);
 
+            // Parcours des résultats de la requête et ajout des données dans le tableau
             while (resultSet.next()) {
                 int id = resultSet.getInt("id_plante");
                 String nom = resultSet.getString("nom_plante");
@@ -364,6 +354,8 @@ public class Fleur extends JFrame {
         }
     }
 	
+	
+	// Méthode pour rechercher des plantes par leur nom
 	private void rechercherNom(String recherche) {
         try {
             String req = "SELECT * FROM plante WHERE nom_plante LIKE ?";

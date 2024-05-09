@@ -16,18 +16,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 
 public class Chargement extends JFrame {
+	
     private JProgressBar barreprogression;
     private Timer minuteur;
     private int progress = 0;
 
     public Chargement() {
+    	
     	setUndecorated(true);
         setSize(400, 220);
         setLocationRelativeTo(null);
        
         Color couleur = new Color(0x057f1a);
 
-        
+        // Creation de la barre de progression
         barreprogression = new JProgressBar(0, 100);
         barreprogression.setBounds(0, 208, 400, 12);
         barreprogression.setStringPainted(true);
@@ -50,7 +52,7 @@ public class Chargement extends JFrame {
         label.setBounds(123, 45, 147, 112);
         panell.add(label);
         
-        JLabel labele = new JLabel("Bienvenue dans Mon Pépinière");
+        JLabel labele = new JLabel("Bienvenue dans Notre Pépinière");
         labele.setHorizontalAlignment(SwingConstants.CENTER);
         labele.setForeground(new Color(5, 127, 26));
         labele.setFont(new Font("Arial", Font.BOLD, 20));
@@ -63,14 +65,16 @@ public class Chargement extends JFrame {
         panel.setBounds(0, 0, 400, 34);
         getContentPane().add(panel);
 
-     
+     // Initialisation du minuteur avec un délai de 100%
         minuteur = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 progress += 2;
                 barreprogression.setValue(progress);
                 if (progress >= 100) {
-                	minuteur.stop();
+                	minuteur.stop();// Arrêter le minuteur lorsque la progression atteint 100%
+                    dispose(); 
+                    ouvrirLogin();
                     dispose(); 
                     ouvrirLogin();
                 }
@@ -78,6 +82,8 @@ public class Chargement extends JFrame {
         });
         minuteur.start();
     }
+    
+ // Méthode pour ouvrir la page de login
     private void ouvrirLogin() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -87,6 +93,7 @@ public class Chargement extends JFrame {
         });
     }
 
+ // Méthode principale pour lancer l'application
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
