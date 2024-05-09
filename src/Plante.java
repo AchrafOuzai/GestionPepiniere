@@ -70,25 +70,12 @@ public class Plante extends JFrame {
 	private JComboBox comboBoxType;
 	private JTable table_plantes;
 	private JTextField champ_recherche;
-	private Connection conn;
-	
+	private Connection conn;	
 	private JTextField champ_image;
 	private JLabel labelImage;
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Plante frame = new Plante();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//methode de connexion avec la base de donnees
 	private void connectionBaseDonnees() {
        
 
@@ -101,6 +88,7 @@ public class Plante extends JFrame {
         }
     }
 	
+	//constructeur de plante
 	public Plante() throws SQLException {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,7 +114,6 @@ public class Plante extends JFrame {
 		btnPlantes.setBounds(5, 22, 177, 23);
 		btnPlantes.setBackground(new Color(0, 128, 0));
 		btnPlantes.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		
 		panel_gauche.add(btnPlantes);
 		
 		JButton btnStock = new JButton("Stock des plantes");
@@ -293,7 +280,7 @@ public class Plante extends JFrame {
                     
                     int id_plante = (int) table_plantes.getValueAt(champ, 0);
                     
-                    supprimerProduit(id_plante);
+                    supprimerPlante(id_plante);
                 } else {
                     
                     System.out.println("Aucun champ selectionne");
@@ -324,11 +311,8 @@ public class Plante extends JFrame {
 		JLabel labelImagetext = new JLabel("Image :");
 		labelImagetext.setBounds(513, 168, 93, 27);
 		labelImagetext.setFont(new Font("Tahoma", Font.BOLD, 17));
-
 		labelImagetext.setForeground(new Color(0, 128, 0));
-
 		labelImagetext.setForeground(new Color(5, 127, 26));
-
 		panneauPrincipal.add(labelImagetext);
 		
 		JButton btnChoix_image = new JButton("Choisir une image");
@@ -375,7 +359,6 @@ public class Plante extends JFrame {
 		btnRecherche.setBackground(new Color(255, 128, 64));
 		btnRecherche.setForeground(new Color(255, 255, 255));
 		btnRecherche.setBorder(null);
-		
 		btnRecherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 		                String recherche = champ_recherche.getText();
@@ -432,15 +415,17 @@ public class Plante extends JFrame {
 		panneauPrincipal.add(btnExporter);
 		
 		
-		
+		//appel de la methode de connexion avec la base de donnees
 		connectionBaseDonnees();
+		//appel de la methode d'affichage des plantes
 		afficherPlantes();
+		//appel de la methode qui permet de selectionner une ligne de la table de donnees
 		selectionnerChamptable();
 	}
 	
 
 	
-	
+	//methode qui permet de selectionner une ligne de la table de donnees
 	private void selectionnerChamptable() {
 		table_plantes.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -465,6 +450,7 @@ public class Plante extends JFrame {
         });
     }
 	
+	//methode qui permet d'ajouter une plante a la base de donnees
     private void ajouterPlante(String nom,String description,String type, double prix, String image) throws IOException {
     	 
     	
@@ -497,6 +483,7 @@ public class Plante extends JFrame {
         }
     }
 
+    //methode permettant d'afficher les plantes de la base de donnees dans une table
     private void afficherPlantes() {
         try {
             String query = "SELECT * FROM plante";
@@ -550,7 +537,7 @@ public class Plante extends JFrame {
     }
   
 
-
+    //methode qui permet de modifier les informations d'une plante
     private void modifierPlante(String nom,String description,String type, double prix, String cheminImage) {
         try {
             
@@ -619,7 +606,8 @@ public class Plante extends JFrame {
         }
     }
 
-    private void supprimerProduit(int id_plante) {
+    //methode qui supprime une plante de la base de donnees
+    private void supprimerPlante(int id_plante) {
         try {
             String mess = "Êtes-vous sûr de vouloir supprimer ce produit ?";
             int confirm = JOptionPane.showOptionDialog(null, mess, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, new Object[]{"Oui", "Non"}, "Non");
@@ -645,6 +633,7 @@ public class Plante extends JFrame {
         }
     }
   
+    //methode qui recherche une plante a travers son nom
     private void rechercherNom(String recherche) {
         try {
             String query = "SELECT * FROM plante WHERE nom_plante LIKE ?";
@@ -685,6 +674,7 @@ public class Plante extends JFrame {
         }
     }
 
+    //methode qui vide les champs où on entre les informations des plantes
     private void viderChamps() {
     	champ_nom.setText("");
         champ_prix.setText("");
@@ -694,7 +684,7 @@ public class Plante extends JFrame {
         champ_image.setText("");
     }
     
-    
+    //methode qui permet d'importe un fichier xml contenent les donnees des plantes et elle insere ces donnees dans la base de donnees
     private void importerPlantes() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Importer XML ");
@@ -723,9 +713,6 @@ public class Plante extends JFrame {
                     double prix = Double.parseDouble(produitElement.getElementsByTagName("prix").item(0).getTextContent());
 
                    
-                    
-
-               
                     String imag = produitElement.getElementsByTagName("image").item(0).getTextContent();
 
                   
@@ -740,7 +727,7 @@ public class Plante extends JFrame {
     }
 
     
-  
+    //methode qui exporte les donnees contenues dans la base de donnees dans un fichier xml
     private void exporterPlantes() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Exporter XML ");
@@ -820,6 +807,9 @@ public class Plante extends JFrame {
             }
         }
     }
+    
+    /*methode qui copie les images de modele de table vers un dossier puis itere dans chaque ligne de model et recupere le chemin des images 
+    puis crée une copie de l'image dans le dossier nouveau, cette methode est utilisee dans la methode exporter*/
     private void copierImages(DefaultTableModel model, File destination) {
         for (int i = 0; i < model.getRowCount(); i++) {
             String im = model.getValueAt(i, 4).toString();

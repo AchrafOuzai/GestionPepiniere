@@ -37,22 +37,10 @@ public class Arbre extends JFrame {
 	private JTable table_plantes;
 	private JTextField champ_recherche;
 	private Connection conn;
-	private byte[] image;
+	
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Arbre frame = new Arbre();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//methode de connexion avec la base de donnees
 	private void connectionBaseDonnees() {
 	       
 
@@ -65,7 +53,7 @@ public class Arbre extends JFrame {
         }
     }
 
-	
+	//constructeur d'arbre
 	public Arbre() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -164,9 +152,7 @@ public class Arbre extends JFrame {
 						produitchemiques.frame.setVisible(true);
 						produitchemiques.frame.setLocationRelativeTo(null);
                  dispose();
-					
-					
-            		
+			
             }
         });
 		panel_gauche.add(btnProduitsChimiques);
@@ -286,8 +272,6 @@ public class Arbre extends JFrame {
 		                rechercherNom(rech);  
 			}
 		});
-		
-		
 		btnRechercher.setBounds(596, 111, 124, 23);
 		btnRechercher.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		panneauPrincipal.add(btnRechercher);
@@ -305,13 +289,15 @@ public class Arbre extends JFrame {
 		
 		
 		
-		
+		//appel de la methode de connexion avec la base de donnees
 		connectionBaseDonnees();
-		afficherPlantes();
+		//appel de la methode d'affichage des arbres
+		afficherArbres();
 
 	}
 	
-	private void afficherPlantes() {
+	//methode qui permet d'afficher les plantes de type arbre
+	private void afficherArbres() {
         try {
             String req = "SELECT * FROM plante where type='Arbre'";
 
@@ -363,6 +349,7 @@ public class Arbre extends JFrame {
         }
     }
 	
+	//methode qui recherche un arbre a travers son nom
 	private void rechercherNom(String recherche) {
         try {
             String req = "SELECT * FROM plante WHERE nom_plante LIKE ?";

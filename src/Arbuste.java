@@ -37,22 +37,10 @@ public class Arbuste extends JFrame {
 	private JTable table_plantes;
 	private JTextField champ_recherche;
 	private Connection conn;
-	private byte[] image;
+	
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Arbre frame = new Arbre();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//methode de connexion avec la base de donnees
 	private void connectionBaseDonnees() {
 	       
 
@@ -65,7 +53,7 @@ public class Arbuste extends JFrame {
         }
     }
 
-	
+	//constructeur d'arbuste
 	public Arbuste() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -306,13 +294,15 @@ public class Arbuste extends JFrame {
 		
 		
 		
-		
+		//appel de la methode de connexion avec la base de donnees
 		connectionBaseDonnees();
-		afficherPlantes();
+		//appel de la methode d'affichage des arbustes
+		afficherArbustes();
 
 	}
 	
-	private void afficherPlantes() {
+	//methode qui permet d'afficher les plantes de type arbuste
+	private void afficherArbustes() {
         try {
             String req = "SELECT * FROM plante where type='Arbuste'";
 
@@ -364,6 +354,7 @@ public class Arbuste extends JFrame {
         }
     }
 	
+	//methode qui recherche un arbuste a travers son nom
 	private void rechercherNom(String recherche) {
         try {
             String req = "SELECT * FROM plante WHERE nom_plante LIKE ?";

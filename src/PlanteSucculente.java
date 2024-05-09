@@ -37,22 +37,10 @@ public class PlanteSucculente extends JFrame {
 	private JTable table_plantes;
 	private JTextField champ_recherche;
 	private Connection conn;
-	private byte[] image;
+	
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Arbre frame = new Arbre();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//methode de connexion avec la base de donnees
 	private void connectionBaseDonnees() {
 	       
 
@@ -65,7 +53,7 @@ public class PlanteSucculente extends JFrame {
         }
     }
 
-	
+	//constructeur de plante succulente
 	public PlanteSucculente() throws SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -170,6 +158,8 @@ public class PlanteSucculente extends JFrame {
             }
         });
 		panel_gauche.add(btnProduitsChimiques);
+		
+		
 		JButton btnArbre = new JButton("Arbres");
 		btnArbre.setBackground(new Color(0, 128, 0));
 		btnArbre.setForeground(new Color(255, 255, 255));
@@ -217,6 +207,7 @@ public class PlanteSucculente extends JFrame {
        });
 		panel_gauche.add(btnArbuste);
 		
+		
 		JButton btnFleur = new JButton("Fleurs");
 		btnFleur.setForeground(new Color(255, 255, 255));
 		btnFleur.setFont(new Font("Arial", Font.BOLD, 12));
@@ -240,6 +231,7 @@ public class PlanteSucculente extends JFrame {
       });
 	
 		panel_gauche.add(btnFleur);
+		
 		
 		JButton btnPlanteSucculente = new JButton("Plante succulente");
 		btnPlanteSucculente.setForeground(new Color(255, 255, 255));
@@ -305,13 +297,15 @@ public class PlanteSucculente extends JFrame {
 		
 		
 		
-		
+		//appel de la methode de connexion avec la base de donnees
 		connectionBaseDonnees();
-		afficherPlantes();
+		//appel de la methode d'affichage des plantes succulentes
+		afficherPlantesSucculentes();
 
 	}
 	
-	private void afficherPlantes() {
+	//methode qui permet d'afficher les plantes de type plante succulente
+	private void afficherPlantesSucculentes() {
         try {
             String req = "SELECT * FROM plante where type='Plante Succulente'";
 
@@ -363,6 +357,7 @@ public class PlanteSucculente extends JFrame {
         }
     }
 	
+	//methode qui recherche une plante succulente a travers son nom
 	private void rechercherNom(String recherche) {
         try {
             String req = "SELECT * FROM plante WHERE nom_plante LIKE ?";
